@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="{{@html_lang}}">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{{@sitename}}</title>
+	
+	<!-- icon -->
+	<link rel="icon" sizes="any" type="image/svg+xml" href="img/logo.svg">
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<!-- Google Font: Roboto -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700&display=fallback">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="/css/font-awesome/css/all.min.css">
+	<!-- jquery-ui -->
+	<link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css">
+	<!-- Custom -->
+	<link rel="stylesheet" href="/css/custom.css?9" rel="stylesheet">
+</head>
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="/js/jquery/jquery.min.js"></script>
+<!-- jquery-ui -->
+<script src="/js/jquery-ui/jquery-ui.min.js"></script>
+<!-- Moment -->
+<script src="/js/moment/moment.js"></script>
+<!-- Bootstrap -->
+<script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- simple-load-more -->
+<script src="/js/simple-load-more/jquery.simpleLoadMore.min.js"></script>
+<!-- fuse -->
+<script src="/js/fuse/fuse.min.js"></script>
+
+<body>
+	<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #06d6a0;">
+		<a class="navbar-brand px-3 fs-6" href="/">{{@sitename}}</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</header>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+				<input class="form-control rounded-0 border-1" type="text" placeholder="{{@search_placeholder}}" id="filter">
+				<div class="position-sticky pt-3 sidebar-sticky">
+					<ul class="nav flex-column" id="resultPlace">
+						<repeat group="{{ @index }}" key="{{ @filename }}" value="{{ @name }}">
+							<li class="nav-item">
+								<a class="nav-link <check if='{{@filename == @PARAMS.name}}'><true>active</true></check>" href="{{ @filename }}">
+									{{ @name }}
+								</a>
+							</li>
+						</repeat>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<br>
+				{{ @md_text | raw }}
+			</main>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+const resultPlace = document.getElementById("resultPlace");
+const list=resultPlace.innerHTML;
+
+$.getJSON("./data/fuse-search.json", function(search) {
+	$.getJSON("./data/fuse-index.json", function(index) {
+		//console.log(index, search);
+		const myIndex = Fuse.parseIndex(index);
+	    const fuse = new Fuse(search, {includeScore: true,
+	    								includeMatches: true,
+	    								minMatchCharLength: 3,
+	    								threshold: 1,
+	    								ignoreLocation: true,
+	    								useExtendedSearch: true,
+	    								keys: ['name', 'filename', 'text']},
+	    								myIndex);
+		//console.log(fuse.getIndex());
+		filter.addEventListener("input", function(e) {
+			var pattern = document.getElementById("filter");
+			if(pattern.value === "" || pattern.value.length < 3){
+				resultPlace.innerHTML=list;
+			}else{
+				resultPlace.innerHTML="";
+				const result = fuse.search(pattern.value);
+				console.log(result);
+				var itemFound = 0;
+				for (x in result) {
+					if(result[x].score<=0.5){
+						itemFound = 1;
+						const textResult = result[x].item.text;
+						var snippet = "";
+						for (y in result[x].matches[0].indices) {
+							start=result[x].matches[0].indices[y][0];
+							end=result[x].matches[0].indices[y][1];
+							if(start>0){
+								snippet += "...";
+							}
+							snippet += textResult.substring(start-11, start-1)+"<b>"+textResult.substring(start, end)+"</b>"+textResult.substring(end, end+11)+"...";
+						}
+						
+						resultPlace.innerHTML += '<li class="nav-item"><a class="nav-link" href="/' + result[x].item.filename +'">' + result[x].item.name + '<br>'+ snippet +'</a></li>';
+					}
+				}
+					
+				if(itemFound == 0){
+					resultPlace.innerHTML += '<li class="nav-item">Nessun risultato trovato con questo parametro. Provare con una chiave diversa.</li>';
+				}
+			}
+		});
+	});
+});
+</script>
