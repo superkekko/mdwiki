@@ -18,6 +18,9 @@ Webserver with Apache 2.4 (or similar) and php 7.4
 ```
 5.execute the enable/refresh search
 
+### Images
+the uploaded images can be placed into `public/img/upload` folder
+
 ### Enable/refresh search
 once added the new `.md` files and updated the `index` file execute
 ```
@@ -25,6 +28,8 @@ node bin/index-search.js
 ```
 
 ## To do
+- [ ] add a load more feature
+- [ ] add version management
 
 ## Thanks to
 - Fat-Free Framework 3.8 (https://fatfreeframework.com)

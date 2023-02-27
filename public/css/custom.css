@@ -153,3 +153,7 @@ table, th, td {
   border-color: #343a40;
   border-collapse: collapse;
 }
+
+img, svg {
+ max-width: 100%
+}

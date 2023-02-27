@@ -3,6 +3,8 @@
 /data/md-wiki-docs/*
 !/data/md-wiki-docs/.keep 
 /public/data/*
-!/public/data/.keep 
+!/public/data/.keep
+/public/img/upload/*
+!/public/img/upload/.keep 
 *.log
 *.tmp
