@@ -1,0 +1,6 @@
+/app/settings.ini
+/tmp/*
+/data/md-wiki-docs/*
+/public/data/*
+*.log
+*.tmp
