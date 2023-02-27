@@ -13,7 +13,7 @@ Webserver with Apache 2.4 (or similar) and php 7.4
 4. create the `index` in json format
 ```
 {
-	"filename.md" : "Name"
+ "filename.md" : "Name"
 }
 ```
 5.execute the enable/refresh search

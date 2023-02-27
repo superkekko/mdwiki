@@ -1,6 +1,8 @@
 /app/settings.ini
 /tmp/*
 /data/md-wiki-docs/*
+!/data/md-wiki-docs/.keep 
 /public/data/*
+!/public/data/.keep 
 *.log
 *.tmp
