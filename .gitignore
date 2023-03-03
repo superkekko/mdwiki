@@ -4,6 +4,8 @@
 !/data/md-wiki-docs/.keep 
 /public/data/*
 !/public/data/.keep
+/data/users/*
+!/data/users/.keep
 /public/img/upload/*
 !/public/img/upload/.keep 
 *.log
