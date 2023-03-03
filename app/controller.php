@@ -20,13 +20,77 @@ class controller {
 		$md_index = $f3->get('index');
 		$index_json = file_get_contents($md_path."/".$md_index);
 		$f3->set('index', json_decode($index_json, true));
-		
-		
 	}
 	
-	//HTTP route post-processor
-	function afterroute($f3) {
-		// Render HTML layout
-		echo Template::instance()->render('layout.html');
+	function login($f3) {
+		$f3->clear('SESSION');
+		$requestpage = $f3->get('COOKIE.requestpage');
+		$f3->clear('COOKIE');
+		$f3->set('COOKIE.requestpage', $requestpage, 1296000);
+
+		//create new session with 15gg live cookie, rootpath, server, secure, httponly and samesite strict
+		session_set_cookie_params(1296000, '/', $_SERVER['HTTP_HOST'], false, true);
+		ini_set('session.cookie_samesite', 'Strict');
+		$token = bin2hex(random_bytes(32));
+		$f3->set('SESSION.token', $token);
+		$f3->set('token', $token);
+
+		echo Template::instance()->render('login.html');
+	}
+
+	function auth($f3) {
+		$username = filter_var($f3->get('POST.username'), FILTER_SANITIZE_STRING);
+		$password = filter_var($f3->get('POST.password'), FILTER_SANITIZE_STRING);
+		$page_token = filter_var($f3->get('POST.csrf_token'), FILTER_SANITIZE_STRING);
+
+		$session_csrf = $f3->get('SESSION.token');
+		
+		$userok = false;
+		
+		$user_path="../data/users";
+		$files = array_diff(scandir($user_path), array('..', '.'));
+		$json_data = [];
+		$file = "";
+		foreach($files as $file){
+			$json_data = file_get_contents('../data/users/'.$file);
+
+			$json_data = (array) json_decode($json_data, false);
+			
+			if($json_data['username']===$username && $json_data['password']===$password){
+				$userok = true;
+				$json_data['token'] = $session_csrf;
+				break;
+			}
+		}
+	
+		if (!empty($page_token) && !empty($session_csrf) && $userok && hash_equals($page_token, $session_csrf)) {
+			$requestpage = $f3->get('COOKIE.requestpage');
+			file_put_contents('../data/users/'.$file, json_encode($json_data));
+			$f3->set('SESSION.username', $json_data['username']);
+			$f3->set('SESSION.password', $json_data['password']);
+			$f3->set('SESSION.filename', $file);
+			$f3->reroute('/'.$requestpage.'/edit');
+		} elseif (!empty($user) && empty($userok) && hash_equals($page_token, $session_csrf) && $company != 'Attivo') {
+			$f3->set('login_error', true);
+			$this->login($f3);
+		}
+	}
+	
+	function checklogged($f3){
+		$session_username = $f3->get('SESSION.username');
+		$session_password = $f3->get('SESSION.password');
+		$session_token = $f3->get('SESSION.token');
+		$session_file = $f3->get('SESSION.filename');
+		
+		$json_data = file_get_contents('../data/users/'.$session_file);
+		$json_data = (array) json_decode($json_data, false);
+		
+		if (!empty($session_file) && !empty($session_token) && !empty($session_password) && !empty($session_username) && $session_username===$json_data['username'] && $session_password===$json_data['password'] && hash_equals($session_token, $json_data['token'])) {
+			return true;
+		}else{
+			return false;
+		}
+		
+		
 	}
 }

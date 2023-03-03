@@ -27,6 +27,17 @@ once added the new `.md` files and updated the `index` file execute
 node bin/index-search.js
 ```
 
+## Online editing
+adding users in folder `data/users` with json files
+```
+{
+ "username":"test",
+ "password":"test",
+ "token":"""
+}
+```
+you can edit online the `.md` files
+
 ## To do
 - [ ] add a load more feature
 - [ ] add version management

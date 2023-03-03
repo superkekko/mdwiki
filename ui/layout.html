@@ -8,8 +8,8 @@
 	<title>{{@sitename}}</title>
 	
 	<!-- icon -->
-	<link rel="icon" sizes="any" type="image/svg+xml" href="img/logo.svg">
-	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+	<link rel="icon" sizes="any" type="/image/svg+xml" href="img/logo.svg">
+	<link rel="icon" type="/image/x-icon" href="img/favicon.ico">
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 	<!-- jquery-ui -->
 	<link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css">
 	<!-- Custom -->
-	<link rel="stylesheet" href="/css/custom.css?13" rel="stylesheet">
+	<link rel="stylesheet" href="/css/custom.css?14" rel="stylesheet">
 </head>
 
 <!-- REQUIRED SCRIPTS -->
@@ -64,7 +64,14 @@
 				<br>
 				{{ @md_text | raw }}
 				<hr>
-				<span class="text-muted">&copy; {{@year}} {{@company}}</span>
+				<div class="row">
+					<div class="col">
+						<span class="text-muted">&copy; {{@year}} {{@company}}</span>
+					</div>
+					<div class="col">
+						<span class="justify-content-end list-unstyled d-flex"><a href="{{@URI}}/edit">Edit</a></span>
+					</div>
+				</div>
 			</main>
 		</div>
 	</div>

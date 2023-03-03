@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="{{@html_lang}}">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{{@sitename}}</title>
+
+	<!-- icon -->
+	<link rel="icon" sizes="any" type="image/svg+xml" href="img/logo.svg">
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="/css/font-awesome/css/all.min.css">
+	<!-- jquery-ui -->
+	<link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css">
+	<!-- Custom -->
+	<link rel="stylesheet" href="/css/custom.css?13" rel="stylesheet">
+	<link rel="stylesheet" href="/css/login.css?" rel="stylesheet">
+</head>
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="/js/jquery/jquery.min.js"></script>
+<!-- jquery-ui -->
+<script src="/js/jquery-ui/jquery-ui.min.js"></script>
+<!-- Moment -->
+<script src="/js/moment/moment.js"></script>
+<!-- Bootstrap -->
+<script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- simple-load-more -->
+<script src="/js/simple-load-more/jquery.simpleLoadMore.min.js"></script>
+<!-- fuse -->
+<script src="/js/fuse/fuse.min.js"></script>
+
+<body>
+
+	<body class="text-center">
+
+		<main class="form-signin w-100 m-auto">
+			<check if="{{ @login_error }}">
+					<true>
+						<div class="alert alert-danger">
+							<i class="icon fas fa-ban"></i> Password o nome utente errati!
+						</div>
+					</true>
+				</check>
+			<form action="{{ @URI }}" method="post" enctype="application/x-www-form-urlencoded">
+				<div class="form-floating">
+					<input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="on" required>
+					<label for="floatingInput">Username</label>
+				</div>
+				<div class="form-floating">
+					<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="on" required>
+					<label for="floatingPassword">Password</label>
+				</div>
+				<input type="hidden" name="csrf_token" id="csrf_token" value="{{@token}}">
+				<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+			</form>
+		</main>
+	</body>
+</html>
