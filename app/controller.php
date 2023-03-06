@@ -17,6 +17,19 @@ class controller {
 		$md_path="../data/md-wiki-docs";
 		$files = array_diff(scandir($md_path), array('..', '.', '.json'));
 		
+		$url = explode("/", $f3->get('URI'));
+		$url = array_filter($url);
+		if (in_array("edit", $url)) {
+			$f3->set('editpage',true);
+		}else{
+			$f3->set('editpage',false);
+		}
+		if (empty($url)) {
+			$f3->set('homepage',true);
+		}else{
+			$f3->set('homepage',false);
+		}
+		
 		$md_index = $f3->get('index');
 		$index_json = file_get_contents($md_path."/".$md_index);
 		$f3->set('index', json_decode($index_json, true));

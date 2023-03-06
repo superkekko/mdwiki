@@ -51,7 +51,7 @@
 					<ul class="nav flex-column" id="resultPlace">
 						<repeat group="{{ @index }}" key="{{ @filename }}" value="{{ @name }}">
 							<li class="nav-item">
-								<a class="nav-link <check if='{{@filename == @PARAMS.name}}'><true>active</true></check>" href="{{ @filename }}">
+								<a class="nav-link <check if='{{@filename == @PARAMS.name}}'><true>active</true></check>" href="/{{ @filename }}<check if='{{@editpage}}'><true>/edit</true></check>">
 									{{ @name }}
 								</a>
 							</li>
@@ -68,9 +68,13 @@
 					<div class="col">
 						<span class="text-muted">&copy; {{@year}} {{@company}}</span>
 					</div>
-					<div class="col">
-						<span class="justify-content-end list-unstyled d-flex"><a href="{{@URI}}/edit">Edit</a></span>
-					</div>
+					<check if='{{!@editpage && !@homepage}}'>
+						<true>
+							<div class="col">
+								<span class="justify-content-end list-unstyled d-flex"><a href="{{ @URI }}/edit">Edit</a></span>
+							</div>
+						</true>
+					</check>
 				</div>
 			</main>
 		</div>

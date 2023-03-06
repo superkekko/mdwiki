@@ -48,7 +48,8 @@ class mdwiki extends controller {
 				</div>
 				<div class="row py-3 d-flex justify-content-end">
 					<div class="col-1 d-flex justify-content-end">
-						<button class="btn btn-custom" type="submit">'.$f3->get('send').'</button>
+						<button class="btn btn-custom" style="margin-right: 0.5rem;" type="submit">'.$f3->get('send').'</button>
+						<button class="btn btn-secondary" type="submit">'.$f3->get('cancel').'</button>
 					</div>
 				</div>
 			</form>';
