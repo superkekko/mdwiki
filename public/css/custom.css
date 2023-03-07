@@ -90,3 +90,7 @@ img, svg {
 	background-color: #06d6a0;
 	border-color: #06d6a0;
 }
+
+.min-vh-93 {
+    min-height: 93vh!important;
+}

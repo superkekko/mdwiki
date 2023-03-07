@@ -1,6 +1,6 @@
 const fuse = require('../public/js/fuse/fuse.js');
 const fs = require('fs');
-const ini = require('./ini.js');
+const ini = require('./ini-read.js');
 const path = require('path');
 
 var search = [];
