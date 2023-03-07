@@ -41,7 +41,7 @@ adding users in folder `data/users` with json files
 ```
 you can edit the `.md` files already presents by clicking `Edit` link in bottom of the pages. You can also upload and delete images
 
-!!ATTENTION: in order to have the correct results in search after online editing you need to execute the [Enable/refresh search](###Enable/refresh-search)
+!!ATTENTION: in order to have the correct results in search after online editing you need to execute the [Enable/refresh search](#Enable/refresh-search)
 
 ## To do
 - [ ] add a load more feature
