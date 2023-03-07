@@ -16,7 +16,7 @@ Webserver with Apache 2.4 (or similar) and php 7.4
  "filename.md" : "Name"
 }
 ```
-5.execute the enable/refresh search
+5.execute the [enable and refresh search](#enable-and-refresh-search)
 
 ### Online editing
 You can edit the `.md` files already presents by clicking ""
@@ -24,7 +24,7 @@ You can edit the `.md` files already presents by clicking ""
 ### Images
 the uploaded images can be placed into `public/img/upload` folder
 
-### Enable/refresh search
+### Enable and refresh search
 once added the new `.md` files and updated the `index` file execute
 ```
 node bin/index-search.js
@@ -41,7 +41,7 @@ adding users in folder `data/users` with json files
 ```
 you can edit the `.md` files already presents by clicking `Edit` link in bottom of the pages. You can also upload and delete images
 
-!!ATTENTION: in order to have the correct results in search after online editing you need to execute the [Enable/refresh search](#Enable/refresh-search)
+!!ATTENTION: in order to have the correct results in search after online editing you need to execute the [enable and refresh search](#enable-and-refresh-search)!!
 
 ## To do
 - [ ] add a load more feature
