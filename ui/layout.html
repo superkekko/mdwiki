@@ -121,6 +121,15 @@ function copyToClipboard(text) {
 </script>
 
 <script>
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault();
+    $('#text').submit();
+  }
+});
+</script>
+
+<script>
 const resultPlace = document.getElementById("resultPlace");
 const list=resultPlace.innerHTML;
 
