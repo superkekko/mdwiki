@@ -67,32 +67,47 @@ class mdwiki extends controller {
 						</div>';
 			
 		$image_files = array_values(array_diff(scandir('img/upload/'), array('..', '.', '.keep')));
-		if(count($image_files)<=3){
-			$image_in_groups = count($image_files);
-		}else{
-			$image_in_groups = round(count($image_files)/3,0,PHP_ROUND_HALF_UP);	
-		}
-		$start=0;
-		
-		$image_html='<div class="row">';
-		for($i = 0; $i <= 4; $i++){
-			$image_html.='<div class="col-sm-4 text-truncate">
+		if(count($image_files) <= 5){
+			$image_html='<div class="row">
+						<div class="col-sm-4 text-truncate">
 							<ul class="list-group list-group-flush">';
-			for($t = $start; $t < $image_in_groups; $t++){
+			foreach($image_files as $image){
 				$image_html.='<li class="list-group-item d-flex align-items-center">
-						  <span class="flex-grow-1 text-truncate"><i class="fa-regular fa-file-image"></i> '.$image_files[$t].'</span>
+						  <span class="flex-grow-1 text-truncate"><i class="fa-regular fa-file-image"></i> '.$image.'</span>
 						  <form action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
-					      <input type="hidden" name="delete-file" value="'.$image_files[$t].'">
+					      <input type="hidden" name="delete-file" value="'.$image.'">
 					      <button class="btn" type="submit"><i class="fa-solid fa-trash"></i></button>
 					      </form>
 					  </li>';
 			}
 			$image_html.='</li>
 					</ul>
-				</div>';
-			$start=$start+$image_in_groups;
+				</div>
+			</div>';
+		}else{
+			$image_html='<div class="row" style="height: 100px; overflow-y: auto;">';
+			$groups=ceil(count($image_files)/3);
+			for($i = 0; $i < count($image_files); $i += $groups){
+				$image_html.='<div class="col-sm-4 text-truncate">
+								<ul class="list-group list-group-flush">';
+				for($t = $i; $t < $i+$groups; $t++){
+					if(empty($image_files[$t])){
+						break;
+					}
+					$image_html.='<li class="list-group-item d-flex align-items-center">
+							  <span class="flex-grow-1 text-truncate"><i class="fa-regular fa-file-image"></i> '.$image_files[$t].'</span>
+							  <form action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
+						      <input type="hidden" name="delete-file" value="'.$image_files[$t].'">
+						      <button class="btn" type="submit"><i class="fa-solid fa-trash"></i></button>
+						      </form>
+						  </li>';
+				}
+				$image_html.='</li>
+						</ul>
+					</div>';
+			}
+			$image_html.='</div>';
 		}
-		$image_html.='</div>';
 
 		if (file_exists($md_path."/".$md_name)) {
 			$data = file_get_contents($md_path."/".$md_name);
