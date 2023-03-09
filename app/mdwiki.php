@@ -49,7 +49,6 @@ class mdwiki extends controller {
 				<div class="row py-3 d-flex justify-content-end">
 					<div class="col-1 d-flex justify-content-end">
 						<button class="btn btn-custom" style="margin-right: 0.5rem;" type="submit">'.$f3->get('send').'</button>
-						<button class="btn btn-secondary" type="submit">'.$f3->get('cancel').'</button>
 					</div>
 				</div>
 			</form>';
@@ -143,32 +142,41 @@ class mdwiki extends controller {
 		$image = $f3->get('FILES.upload');
 		if(!empty($image)){
 			$target_dir = "img/upload/";
+			$allowed_img_types=['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/tiff', 'image/webp'];
+			$upload_result=[];
 			
-			for ($i = 0; $i <= count($image['name']); $i++) {
+			for ($i = 0; $i < count($image['name']); $i++) {
 			    $filename = $image['name'][$i];
-				$size = $image['size'][$i];
-				$type = $image['type'][$i];
-				$path = pathinfo($file);
-				$ext = $path['extension'];
-				$temp_name = $image['tmp_name'][$i];
 				$path_filename_ext = $target_dir.$filename;
 				
 				$folder_files = array_diff(scandir($target_dir), array('..', '.', '.keep'));
-
+				
 				if(in_array($filename, $folder_files)){
-					$f3->set('image_load_output', $f3->get('file_present'));
-				}elseif ($size > 10000000) {
-					$f3->set('image_load_output', "too_big");
-				}elseif (!in_array($type, ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/tiff', 'image/webp'])) {
-					$f3->set('image_load_output', $f3->get('type_mismatch'));
-				}else{
-					move_uploaded_file($temp_name, $path_filename_ext);
-					$f3->set('image_load_output', $f3->get('upload_ok'));
+					$upload_result[$filename]= $f3->get('file_present');
+					continue;
 				}
 				
-				$this->edit($f3);
+				if ($image['size'][$i] > 10000000) {
+					$upload_result[$filename]= $f3->get('too_big');
+					continue;
+				}
+				
+				if (!in_array($image['type'][$i], $allowed_img_types)) {
+					$upload_result[$filename]= $f3->get('type_mismatch');
+					continue;
+				}
+				
+				move_uploaded_file($image['tmp_name'][$i], $path_filename_ext);
+				$upload_result[$filename]= $f3->get('upload_ok');	
 			}
 			
+			$result="";
+			foreach($upload_result as $key => $value) {
+			  $result.=$key.": ".$value."<br>";
+			}
+			
+			$f3->set('image_load_output', $result);
+			$this->edit($f3);
 		}
 	}
 

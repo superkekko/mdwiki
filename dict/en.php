@@ -3,7 +3,6 @@ return array(
     'html_lang'=>'en',
     'search_placeholder'=>'Insert 3 letter to search...',
     'send' => 'Save',
-    'cancel' => 'Exit',
     'upload' => 'Upload image',
     'file_present' => 'Upload KO - file already present',
     'too_big' => 'Upload KO - file too big (max dimension 10Mb)',
