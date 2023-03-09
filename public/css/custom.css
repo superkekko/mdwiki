@@ -94,3 +94,7 @@ img, svg {
 .min-vh-93 {
     min-height: 93vh!important;
 }
+
+.li {
+	margin-left: 1rem !important;
+}
