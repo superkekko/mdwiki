@@ -56,6 +56,21 @@
 								</a>
 							</li>
 						</repeat>
+						<check if="{{@editpage}}">
+							<true>
+								<hr>
+								<li class="nav-item">
+									<a class="nav-link <check if='{{@homefile == @PARAMS.name}}'><true>active</true></check>" href="/{{ @homefile }}<check if='{{@editpage}}'><true>/edit</true></check>">
+										Home Page
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link <check if='{{@error == @PARAMS.name}}'><true>active</true></check>" href="/{{ @error }}<check if='{{@editpage}}'><true>/edit</true></check>">
+										Error Page
+									</a>
+								</li>
+							</true>
+						</check>
 					</ul>
 				</div>
 			</nav>
