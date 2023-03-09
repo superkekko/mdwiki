@@ -18,6 +18,9 @@ Webserver with Apache 2.4 (or similar) and php 7.4
 ```
 5.execute the [enable and refresh search](#enable-and-refresh-search)
 
+### Shortcut link
+If you want to add shorcut link you can add it in settings.ini like the example
+
 ### Online editing
 You can edit the `.md` files already presents by clicking ""
 

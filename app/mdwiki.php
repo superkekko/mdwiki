@@ -35,10 +35,17 @@ class mdwiki extends controller {
 
 		$md_path = "../data/md-wiki-docs";
 		$md_error = $f3->get('error');
+		
+		$shortcuts = $f3->get('shortcut');
+		$shortcuts_link = $f3->get('shortcutLink');
+		$html_shortcut="";
+		foreach ($shortcuts as $key => $value){
+			$html_shortcut.='<button class="btn clipboard" data-copy="'.$value.'">'.$shortcuts_link[$key].'</button>';
+		}
 
 		$form_pre = '<div class="row">
 					<div class="col-sm-12 d-flex align-items-center">
-						'.$f3->get('md_short').'<button class="btn clipboard" data-copy="[Link text Here](https://link-url-here.org)"><i class="fa-solid fa-link"></i></button>
+						'.$f3->get('md_short').$html_shortcut.'
 					</div>
 				</div>
 				<div class="row">
