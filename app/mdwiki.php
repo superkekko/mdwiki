@@ -104,6 +104,7 @@ class mdwiki extends controller {
 					}
 					$image_html.='<li class="list-group-item d-flex align-items-center">
 							  <span class="flex-grow-1 text-truncate"><i class="fa-regular fa-file-image"></i> '.$image_files[$t].'</span>
+							  <button class="btn clipboard" data-copy="!['.$image_files[$t].'](/img/upload/'.$image_files[$t].')"><i class="fa-regular fa-clipboard"></i></button>
 							  <form action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
 						      <input type="hidden" name="delete-file" value="'.$image_files[$t].'">
 						      <button class="btn" type="submit"><i class="fa-solid fa-trash"></i></button>
