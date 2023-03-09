@@ -36,22 +36,30 @@ class mdwiki extends controller {
 		$md_path = "../data/md-wiki-docs";
 		$md_error = $f3->get('error');
 
-		$form_pre = '<form id="text" action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
+		$form_pre = '<div class="row">
+					<div class="col-sm-12 d-flex align-items-center">
+						'.$f3->get('md_short').'<button class="btn clipboard" data-copy="[Link text Here](https://link-url-here.org)"><i class="fa-solid fa-link"></i></button>
+					</div>
+				</div>
+				<div class="row">
+				<form id="text" action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
 				<div class="row g-4 d-flex justify-content-end align-items-stretch">
 					<div class="col-sm-12">
 						<div class="form-group">
 							<textarea class="form-control" name="text" style="height: 60vh;">';
 
 		$form_post = '</textarea>
+						<div style="text-align: right; font-size: 10px">'.$f3->get('md_link').'</div>
 						</div>
 					</div>
 				</div>
 				<div class="row py-3 d-flex justify-content-end">
-					<div class="col-1 d-flex justify-content-end">
+					<div class="col-1">
 						<button class="btn btn-custom" style="margin-right: 0.5rem;" type="submit">'.$f3->get('send').'</button>
 					</div>
 				</div>
-			</form>';
+			</form>
+			</div>';
 			
 			
 		$image_form='<div class="row d-flex align-items-center">
@@ -73,6 +81,7 @@ class mdwiki extends controller {
 			foreach($image_files as $image){
 				$image_html.='<li class="list-group-item d-flex align-items-center">
 						  <span class="flex-grow-1 text-truncate"><i class="fa-regular fa-file-image"></i> '.$image.'</span>
+						  <button class="btn clipboard" data-copy="!['.$image.'](/img/upload/'.$image.')"><i class="fa-regular fa-clipboard"></i></button>
 						  <form action="'.$f3->get('URI').'" method="post" enctype="application/x-www-form-urlencoded">
 					      <input type="hidden" name="delete-file" value="'.$image.'">
 					      <button class="btn" type="submit"><i class="fa-solid fa-trash"></i></button>

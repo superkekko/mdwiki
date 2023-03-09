@@ -2,6 +2,8 @@
 return array(
     'html_lang'=>'en',
     'search_placeholder'=>'Insert 3 letter to search...',
+    'md_short' => 'Shortcut link (clic to copy)',
+    'md_link' => 'Here you can youse <a href="https://www.markdownguide.org/cheat-sheet/" target=_blank>markdown</a> formatting',
     'send' => 'Save',
     'upload' => 'Upload image',
     'file_present' => 'Upload KO - file already present',
