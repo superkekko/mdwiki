@@ -78,11 +78,17 @@ class controller {
 	
 		if (!empty($page_token) && !empty($session_csrf) && $userok && hash_equals($page_token, $session_csrf)) {
 			$requestpage = $f3->get('COOKIE.requestpage');
+			
 			file_put_contents('../data/users/'.$file, json_encode($json_data));
 			$f3->set('SESSION.username', $json_data['username']);
 			$f3->set('SESSION.password', $json_data['password']);
 			$f3->set('SESSION.filename', $file);
-			$f3->reroute('/'.$requestpage.'/edit');
+			
+			if(empty($requestpage)){
+				$f3->reroute('/'.$f3->get('homefile').'/edit');
+			}else{
+				$f3->reroute('/'.$requestpage.'/edit');
+			}
 		} elseif (!empty($user) && empty($userok) && hash_equals($page_token, $session_csrf) && $company != 'Attivo') {
 			$f3->set('login_error', true);
 			$this->login($f3);
