@@ -89,7 +89,7 @@ class controller {
 			}else{
 				$f3->reroute('/'.$requestpage.'/edit');
 			}
-		} elseif (!empty($user) && empty($userok) && hash_equals($page_token, $session_csrf) && $company != 'Attivo') {
+		} elseif (!empty($user) && empty($userok) && hash_equals($page_token, $session_csrf)) {
 			$f3->set('login_error', true);
 			$this->login($f3);
 		}
