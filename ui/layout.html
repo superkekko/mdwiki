@@ -36,7 +36,7 @@
 <script src="/js/fuse/fuse.min.js"></script>
 
 <body>
-	<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #06d6a0;">
+	<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: {{@headcolor}};">
 		<a class="navbar-brand px-3 fs-6" href="/">{{@sitename}}</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -153,7 +153,7 @@ $.getJSON("./data/fuse-search.json", function(search) {
 			}else{
 				resultPlace.innerHTML="";
 				const result = fuse.search(pattern.value);
-				console.log(result);
+				//console.log(result);
 				var itemFound = 0;
 				for (x in result) {
 					if(result[x].score<=0.5){
